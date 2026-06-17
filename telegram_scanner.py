@@ -21,7 +21,7 @@ import os, sys, time, math, warnings, requests, schedule
 import pandas as pd
 import pytz
 import yfinance as yf
-from datetime import datetime, date as date_t
+from datetime import datetime, date as date_t, timedelta
 
 warnings.filterwarnings("ignore")
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
@@ -307,6 +307,11 @@ def scan():
             continue
         alert_key = f"{sig['dir']}_{str(sig['c_t'])[11:16]}"
         if alert_key in sent:
+            continue
+        # Only alert signals whose candle closed within the last 30 min
+        # (prevents re-alerting stale signals after a scanner restart)
+        candle_age = _now() - sig["c_t"]
+        if candle_age > timedelta(minutes=30):
             continue
         sent.add(alert_key)
         new_alerts += 1
