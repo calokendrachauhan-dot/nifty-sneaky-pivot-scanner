@@ -1,0 +1,8 @@
+﻿__pycache__/
+*.pyc
+*.csv
+nifty_15min.csv
+trades.csv
+_tg_*.ps1
+*.png
+.env
