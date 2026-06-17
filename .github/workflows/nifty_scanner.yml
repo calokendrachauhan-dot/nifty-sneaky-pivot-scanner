@@ -1,0 +1,33 @@
+name: NIFTY Sneaky Pivot Scanner
+
+on:
+  schedule:
+    # Every 15 min during NSE market hours (9:15–15:30 IST = 3:45–10:00 UTC), Mon–Fri
+    - cron: '45 3 * * 1-5'
+    - cron: '0,15,30,45 4-9 * * 1-5'
+    - cron: '0 10 * * 1-5'
+  workflow_dispatch:   # lets you trigger manually from GitHub UI
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run scan
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python scan_once.py
