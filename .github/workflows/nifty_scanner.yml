@@ -2,9 +2,9 @@ name: NIFTY Sneaky Pivot Scanner
 
 on:
   schedule:
-    # Every 15 min during NSE market hours (9:15–15:30 IST = 3:45–10:00 UTC), Mon–Fri
-    - cron: '45 3 * * 1-5'
-    - cron: '0,15,30,45 4-9 * * 1-5'
+    # Every 5 min during NSE market hours (9:15–15:30 IST = 3:45–10:00 UTC), Mon–Fri
+    - cron: '45,50,55 3 * * 1-5'
+    - cron: '*/5 4-9 * * 1-5'
     - cron: '0 10 * * 1-5'
   workflow_dispatch:   # lets you trigger manually from GitHub UI
 
