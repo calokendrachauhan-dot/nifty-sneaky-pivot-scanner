@@ -1,0 +1,6 @@
+numpy>=1.24
+pandas>=2.0
+yfinance>=0.2        # optional — falls back to synthetic if unavailable
+schedule>=1.2        # whatsapp_scanner.py — job scheduler
+requests>=2.28       # whatsapp_scanner.py — CallMeBot API
+pytz>=2023.3         # whatsapp_scanner.py — IST timezone
