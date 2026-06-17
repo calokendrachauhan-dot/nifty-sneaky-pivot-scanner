@@ -355,24 +355,17 @@ def main():
         _log("Sending startup test message...")
         send_telegram(
             "*NIFTY Scanner Started*\n"
-            "Watching for Sneaky Pivot setups every 15 min.\n"
+            "Scanning every 60 seconds for instant alerts.\n"
             "Market hours: 9:15 AM - 3:30 PM IST"
         )
 
-    n = _now()
-    mins_past = n.minute % 15
-    if mins_past != 0:
-        wait = (15 - mins_past) * 60 - n.second
-        _log(f"Waiting {wait}s to align with next candle close...")
-        time.sleep(max(wait - 5, 0))
-
     scan()
-    schedule.every(15).minutes.do(scan)
+    schedule.every(60).seconds.do(scan)
 
-    _log("Scanner running. Press Ctrl+C to stop.")
+    _log("Scanner running (every 60s). Press Ctrl+C to stop.")
     while True:
         schedule.run_pending()
-        time.sleep(30)
+        time.sleep(10)
 
 
 if __name__ == "__main__":
