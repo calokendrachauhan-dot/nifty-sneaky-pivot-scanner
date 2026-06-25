@@ -350,7 +350,8 @@ def main() -> None:
         print(msg)
         print()
 
-        sent = send_ntfy(msg, msg_id) or send_telegram(msg)
+        send_ntfy(msg, msg_id)
+        send_telegram(msg)
         found = True
 
     if not found:
